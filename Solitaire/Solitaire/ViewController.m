@@ -52,7 +52,12 @@ const CGFloat FaceHeight = 8.0f;
     UIView *fCardTwo;
     CGRect fCardThree;
     CGRect fCardFour;
-    
+    CGRect  moveCountRect;
+    UILabel  *moveCountLabel;
+    UILabel  *timeLabel;
+    CGRect  timeRect;
+    UIToolbar *toolbar;
+
 }
 
 @synthesize cardTable;
@@ -75,53 +80,105 @@ const CGFloat FaceHeight = 8.0f;
     _cardStackTwo = [[NSMutableArray alloc] init];
     _cardStackThree = [[NSMutableArray alloc] init];
     _cardStackFour = [[NSMutableArray alloc] init];
-    _cardStackFive=[[NSMutableArray alloc] init];
-    _cardStackSix=[[NSMutableArray alloc] init];
-    
-    _foundationOne =[[NSMutableArray alloc]init];
-    _foundationTwo =[[NSMutableArray alloc]init];
-    _foundationThree =[[NSMutableArray alloc]init];
-    _foundationFour =[[NSMutableArray alloc]init];
-    
-    _wasteOne =[[NSMutableArray alloc]init];
-    _wasteTwo =[[NSMutableArray alloc]init];
-    
-    
-    
-    _cardDeck= [_viewCard setUp];
-    
-    
     _cardtag = 100;
+
     
-    
-    [self cardStacks];
-    [self getTimeLabel];
+    self.view.backgroundColor = [UIColor colorWithRed:110.0f/250.0f green:255.0f/255.0f blue:120.0f/255.0f alpha:.4f];
+                                 
+      [self cardToolBar];
+     [self cardStacks];
+
+    _cardDeck= [_viewCard setUp];
     [self cardTableView:cardTable viewForRowAtIndex:m];
- //   [self createCardDeck];
+
     [self numberofView:cardTable];
 }
 
 
 -(void) getTimeLabel{
     
-    
-    
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     
-    CGRect  timeRect = CGRectMake(140, 5, 30,45);
-    UILabel  *timeLabel = [[UILabel alloc] initWithFrame:timeRect];
-    
+    timeRect = CGRectMake(120, 5, 50,45);
+    timeLabel = [[UILabel alloc] initWithFrame:timeRect];
     formatter.dateFormat= @"HH:mm";
     timeLabel.text = [formatter stringFromDate:[NSDate date]];
     timeLabel.textColor = [UIColor  blueColor];
-    timeLabel.adjustsFontSizeToFitWidth = YES;
     timeLabel.clipsToBounds =YES;
     timeLabel.textAlignment = NSTextAlignmentLeft;
-    CGAffineTransform labelSize = CGAffineTransformMakeScale(1.3, 1.3);
-    timeLabel.transform = labelSize;
-    [self.view addSubview:timeLabel];
+    
+ //   [self.view addSubview:timeLabel];
+  
+}
+
+
+
+
+
+
+#pragma mark - UITOOLBAR
+-(void)cardToolBar{
+    
+    //create toolbar using new
+    toolbar = [UIToolbar new];
+    toolbar.backgroundColor = [UIColor blackColor];
+    toolbar.barStyle = UIBarStyleDefault;
+    //[toolbar sizeToFit];
+    toolbar.frame = CGRectMake(0, 450, 320, 30);
+    
+    //Add buttons
+    UIBarButtonItem *barbuttonItem1 = [[UIBarButtonItem alloc]
+                                       initWithTitle:@"New" style:UIBarButtonItemStylePlain target:self action:@selector(performNew:)];
+    
+    UIBarButtonItem *barbuttonItem2 = [[UIBarButtonItem alloc]
+                                       initWithTitle:@"Hint" style:UIBarButtonItemStylePlain
+                                       target:self
+                                       action:@selector(performHint: )];
+    
+    UIBarButtonItem *barbuttonItem3 = [[UIBarButtonItem alloc]
+                                       initWithTitle:@"Undo" style:UIBarButtonItemStylePlain
+                                       target:self
+                                       action:@selector(performUndo: )];
+    
+    UIBarButtonItem *barbuttonItem4 = [[UIBarButtonItem alloc]
+                                      initWithTitle:@"info" style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(displayInfo:)];
+    
+    UIBarButtonItem *spaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                               target:nil
+                                                                               action:nil];
+    
+    
+    NSArray *items = [NSArray arrayWithObjects: barbuttonItem4, spaceItem,spaceItem,spaceItem,barbuttonItem1, spaceItem,  barbuttonItem2, spaceItem, barbuttonItem3, nil];
+    
+    //add array of buttons to toolbar
+    [toolbar setItems:items animated:NO];
+    
+    [self.view addSubview:toolbar];
     
 }
+
+
+-(void) displayInfo: (id)sender {
+    
+}
+
+-(void) performNew: (id)sender {
+   
+}
+
+
+-(void) performHint: (id)sender {
+    
+}
+-(void) performUndo: (id)sender {
+    
+}
+
+
+
+
 
 
 
@@ -146,18 +203,34 @@ const CGFloat FaceHeight = 8.0f;
 
 - (UIView*)cardTableView:(UITableView *)cardView viewForRowAtIndex:(int)index{
     
-    
     int labelCount = [_cardDeck count];
     int  b=2;
     xPosition= 2;
     
+    CGRect  moveRect = CGRectMake(235, 30, 60,45);
+    UILabel  *moveLabel = [[UILabel alloc] initWithFrame:moveRect];
+    
+    moveLabel.text=@"Moves:  ";
+    
+    [self.view addSubview:moveLabel];
+    
+    
+      moveCountRect = CGRectMake(295, 30, 20,45);
+      moveCountLabel = [[UILabel alloc] initWithFrame:moveCountRect];
+    
+      moveCountLabel.text= [NSString stringWithFormat:@"%d", moveCount++] ;
+    [self.view addSubview:moveCountLabel];
+    
+    
+    
+    
     for (int i=1; i<=8; i++) {
         
-        yPosition = 120;
+        yPosition = 180;
         if (i==8){
             b=labelCount-m;
             xPosition=2;
-            yPosition=40;
+            yPosition=70;
         }
         
         for (int j=1; j<=b; j++) {
@@ -182,15 +255,10 @@ const CGFloat FaceHeight = 8.0f;
             _card.layer.borderWidth = 1.0f;
             _card.layer.borderColor =[UIColor grayColor].CGColor;
             
-            
-            
-            
             _viewCard =[_cardDeck objectAtIndex:random() % [_cardDeck count]];
             
             viewLabel3.text = _viewCard.description;
             viewLabel4.text =_viewCard.description;
-            
-            
             
             if([viewLabel3.text containsString:@"♥" ] ||[viewLabel3.text containsString:@"♦"]||[viewLabel4.text containsString:@"♥" ] ||[viewLabel4.text containsString:@"♦"])
             {
@@ -238,9 +306,6 @@ const CGFloat FaceHeight = 8.0f;
                 _card.tag = 300+_cardRank;
             }
             
-            
-            
-            
             if ([viewLabel3.text containsString:@"♣"]){
                 _card.tag = 400+ _cardRank;
             }
@@ -278,7 +343,7 @@ const CGFloat FaceHeight = 8.0f;
 
 
 -(void)shuffleCard{
-    CGRect  shuffleRect = CGRectMake(50, 40, CardWidth, CardHeight);
+    CGRect  shuffleRect = CGRectMake(50, 70, CardWidth, CardHeight);
     _cardshuffle = [[UIView alloc] initWithFrame:shuffleRect];
     [_cardshuffle setContentMode:UIViewContentModeCenter];
     _cardshuffle.clipsToBounds = YES;
@@ -295,12 +360,12 @@ const CGFloat FaceHeight = 8.0f;
     [self shuffleCard];
     int stack_x = 130;
     int tagnum = 100;
-    int stack_index =0;
+    
     
     for (int j=1; j<=4; j++) {
         UILabel *stackLabel = [[UILabel alloc] initWithFrame:CGRectMake(10,20,SuitWidth,SuitHeight)];
         
-        CGRect  stackRect = CGRectMake(stack_x, 40, CardWidth, CardHeight);
+        CGRect  stackRect = CGRectMake(stack_x, 70, CardWidth, CardHeight);
         _cardStack = [[UIView alloc] initWithFrame:stackRect];
         [_cardStack setContentMode:UIViewContentModeCenter];
         _cardStack.clipsToBounds = YES;
@@ -312,44 +377,30 @@ const CGFloat FaceHeight = 8.0f;
         
         if (_cardStack.tag == 100 ){
             stackLabel.text =@"♥";
-            
             [stackLabel sizeToFit];
-           // [_cardStackOne addObject:_cardStack ];
             fCardOne =[ _cardStack frame];
             
         }
         if (_cardStack.tag ==200){
             stackLabel.text =@"♠︎";
             [stackLabel sizeToFit];
-            [_cardStackTwo addObject:_cardStack ];
             fCardTwo = _cardStack ;
             
         }
         if (_cardStack.tag == 300){
             stackLabel.text =@"♦";
-           
             [stackLabel sizeToFit];
-            [_cardStackThree addObject:_cardStack ];
             fCardThree =[ _cardStack frame];
-         
         }
-        
         
         if (_cardStack.tag ==400){
             stackLabel.text =@"♣︎";
             [stackLabel sizeToFit];
-            [_cardStackFour addObject:_cardStack ];
             fCardFour =[ _cardStack frame];
-         
         }
-        
-        
         [ _cardStack addSubview:stackLabel];
     
         [self.view addSubview:_cardStack];
-        
-        
-        
         tagnum = tagnum+100;
         
         stack_x = stack_x +CardWidth+4;
@@ -398,12 +449,14 @@ const CGFloat FaceHeight = 8.0f;
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
     CGPoint firstTouch = [touch locationInView:self.view];
-    [self getTimeLabel];
+    
+    moveCountLabel.text= [NSString stringWithFormat:@"%d", moveCount++] ;
+    
+    [self.view addSubview:moveCountLabel];
+    
     
     for (UIView *view in _viewArray) {
-        NSLog(@"%@", view);
         if (CGRectContainsPoint(view.frame, firstTouch)) {
-            
             _toMove = view;
         }
     }
@@ -418,30 +471,20 @@ const CGFloat FaceHeight = 8.0f;
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self getTimeLabel];
     UITouch *touch = [touches anyObject];
     _currentTouch = [touch locationInView:self.view];
     _toMove.center = _currentTouch;
     
     
     if (_toMove.tag >= 101 &&  _toMove.tag <= 199){
-        
-        if ([_cardStackOne.lastObject tag] <_toMove.tag) {
-            _toMove.frame =fCardOne;
-            [self.view addSubview:_toMove];
-        }else{
-            [self touchesCancelled:touches withEvent:event];
-            
-        }
+        _toMove.frame =fCardOne;
+        [self.view addSubview:_toMove];
     }
     
     if (_toMove.tag >= 201 &&  _toMove.tag <= 299){
-        if(fCardTwo.tag <_toMove.tag){
-            _toMove.frame =fCardTwo.frame;
-            [self.view addSubview:_toMove];
-        }else{
-            [self touchesCancelled:touches withEvent:event];
-            
-        }
+        _toMove.frame =fCardTwo.frame;
+        [self.view addSubview:_toMove];
     }
     if (_toMove.tag >= 301 &&  _toMove.tag <= 399){
         _toMove.frame =fCardThree;
@@ -452,6 +495,7 @@ const CGFloat FaceHeight = 8.0f;
         _toMove.frame =fCardFour;
         [self.view addSubview:_toMove];
     }
+
     
 }
 
@@ -459,9 +503,5 @@ const CGFloat FaceHeight = 8.0f;
     UITouch *touch = [touches anyObject];
     _toMove.center = _card.center;
     [touch previousLocationInView:_toMove];
-    
-    //   _toMove.transform = CGAffineTransformIdentity;
-    // _toMove.transform = CGAffineTransformTranslate(_toMove.transform, 0.0, 0.0);
-    
 }
 @end
