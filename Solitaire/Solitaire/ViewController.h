@@ -10,15 +10,10 @@
 
 #import"CardView.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) CardView *cardView;
-
-@property (nonatomic) IBOutletCollection(UIView) NSMutableArray *tableOfCard;
-
-
-@property (nonatomic) IBOutletCollection(UIView) NSMutableArray *waste;
-@property (nonatomic) IBOutletCollection(UIView) NSMutableArray *foundation;
+@property (strong, nonatomic) UITableView *cardTable;
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event;
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
