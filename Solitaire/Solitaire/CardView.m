@@ -30,22 +30,7 @@
     [self setNeedsDisplay];
 }
 
-/*
- -(void)awakeFromNib{
- 
- [self setUp];
- }
- */
--(void)matchedCard:(NSMutableArray *)otherCards{
-    
-    for (CardView *card in otherCards){
-        //   if ([card.description isEqualToString:self.description]){
-        NSLog(@"%@", card.description);
-        //   }
-    }
-    
-    
-}
+
 
 
 -(NSMutableArray *) setUp{

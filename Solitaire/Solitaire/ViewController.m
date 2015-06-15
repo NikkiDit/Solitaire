@@ -207,7 +207,7 @@ const CGFloat FaceHeight = 8.0f;
     int  b=2;
     xPosition= 2;
     
-    CGRect  moveRect = CGRectMake(235, 30, 60,45);
+    CGRect  moveRect = CGRectMake(235, 50, 60,45);
     UILabel  *moveLabel = [[UILabel alloc] initWithFrame:moveRect];
     
     moveLabel.text=@"Moves:  ";
@@ -215,7 +215,7 @@ const CGFloat FaceHeight = 8.0f;
     [self.view addSubview:moveLabel];
     
     
-      moveCountRect = CGRectMake(295, 30, 20,45);
+      moveCountRect = CGRectMake(295, 50, 20,45);
       moveCountLabel = [[UILabel alloc] initWithFrame:moveCountRect];
     
       moveCountLabel.text= [NSString stringWithFormat:@"%d", moveCount++] ;
@@ -230,7 +230,7 @@ const CGFloat FaceHeight = 8.0f;
         if (i==8){
             b=labelCount-m;
             xPosition=2;
-            yPosition=70;
+            yPosition=90;
         }
         
         for (int j=1; j<=b; j++) {
@@ -343,7 +343,7 @@ const CGFloat FaceHeight = 8.0f;
 
 
 -(void)shuffleCard{
-    CGRect  shuffleRect = CGRectMake(50, 70, CardWidth, CardHeight);
+    CGRect  shuffleRect = CGRectMake(50, 90, CardWidth, CardHeight);
     _cardshuffle = [[UIView alloc] initWithFrame:shuffleRect];
     [_cardshuffle setContentMode:UIViewContentModeCenter];
     _cardshuffle.clipsToBounds = YES;
@@ -365,7 +365,7 @@ const CGFloat FaceHeight = 8.0f;
     for (int j=1; j<=4; j++) {
         UILabel *stackLabel = [[UILabel alloc] initWithFrame:CGRectMake(10,20,SuitWidth,SuitHeight)];
         
-        CGRect  stackRect = CGRectMake(stack_x, 70, CardWidth, CardHeight);
+        CGRect  stackRect = CGRectMake(stack_x, 90, CardWidth, CardHeight);
         _cardStack = [[UIView alloc] initWithFrame:stackRect];
         [_cardStack setContentMode:UIViewContentModeCenter];
         _cardStack.clipsToBounds = YES;

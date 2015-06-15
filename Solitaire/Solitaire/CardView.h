@@ -10,12 +10,9 @@
 
 @interface CardView : UIView
 
-
-
-
 @property(nonatomic) NSNumber *rank;
-@property(nonatomic, strong) NSString *suit;
 
+@property(nonatomic, strong) NSString *suit;
 
 @property (nonatomic, getter=isChosen) BOOL *chosen; //to change the name of the getter
 @property (nonatomic, getter=isMatched) BOOL *matched;
@@ -23,8 +20,6 @@
 
 
 - (id)initWithRank:(NSNumber *)rankString suit:(NSString*)suit;
-
--(void) matchedCard: (NSMutableArray *) otherCards;
 
 
 -(NSMutableArray *)setUp;
