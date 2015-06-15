@@ -481,7 +481,7 @@ const CGFloat FaceHeight = 8.0f;
  _card= [self hitTest: touchLocation withEvent:nil] ;
  
  
- //                        [temp insertSubview:_cardStack aboveSubview:_card];
+[temp insertSubview:_cardStack aboveSubview:_card];
  
  
  }];
